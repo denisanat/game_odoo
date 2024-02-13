@@ -39,6 +39,18 @@
       <field name="view_mode">tree,form</field>
     </record>
 
+    <record model="ir.actions.act_window" id="game.action_badge_window">
+      <field name="name">Badges</field>
+      <field name="res_model">game.badge</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="game.action_clan_window">
+      <field name="name">Clans</field>
+      <field name="res_model">game.clan</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
 
     <!-- server action to the one above -->
 <!--
@@ -65,7 +77,9 @@
 
     <!-- actions -->
     <menuitem name="Players" id="game.menu_player_list" parent="game.menu_1" action="game.action_player_window"/>
+    <menuitem name="Clans" id="game.menu_clan_list" parent="game.menu_1" action="game.action_clan_window"/>
     <menuitem name="Buildings" id="game.menu_building_list" parent="game.menu_2" action="game.action_building_window"/>
+    <menuitem name="Badges" id="game.menu_badge_list" parent="game.menu_2" action="game.action_badge_window"/>
 
   </data>
 </odoo>

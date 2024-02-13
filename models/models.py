@@ -14,6 +14,8 @@ class player( models.Model ):
 
     buildings = fields.One2many( comodel_name = 'game.building', inverse_name = 'player', string = "Edificios" )
     badges = fields.Many2many( comodel_name = 'game.badge', string = 'Insignias' )
+    clan = fields.Many2one( "game.clan" )
+    clanFriends = fields.One2many( 'game.player', related = 'clan.players', readonly = True, string = 'Compañeros de clan' )
 
 
 class building( models.Model ):
@@ -31,8 +33,18 @@ class badge( models.Model ):
     _description = 'Badges that players can put to personalize their profiles'
 
     name = fields.Char()
+    text = fields.Text()
 
     players = fields.Many2many( comodel_name='game.player' )
+
+class clan( models.Model ):
+    _name = 'game.clan'
+    _description = 'Clans where anyone can join'
+
+    name = fields.Char()
+    
+    players = fields.One2many( comodel_name = 'game.player', inverse_name = 'clan' )
+    
 
 
 
