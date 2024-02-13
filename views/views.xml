@@ -1,0 +1,71 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="game.player_list">
+      <field name="name">players list</field>
+      <field name="model">game.player</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="th_level"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="game.building_list">
+      <field name="name">buildings list</field>
+      <field name="model">game.building</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="level"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="game.action_player_window">
+      <field name="name">Players</field>
+      <field name="res_model">game.player</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="game.action_building_window">
+      <field name="name">Buildings</field>
+      <field name="res_model">game.building</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="game.action_server">
+      <field name="name">game server</field>
+      <field name="model_id" ref="model_game_game"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+    <menuitem name="Game" id="game.menu_root"/>
+
+    <!-- menu categories -->
+    <menuitem name="Main Window" id="game.menu_1" parent="game.menu_root"/>
+    <menuitem name="Build Window" id="game.menu_2" parent="game.menu_root"/>
+
+    <!-- actions -->
+    <menuitem name="Players" id="game.menu_player_list" parent="game.menu_1" action="game.action_player_window"/>
+    <menuitem name="Buildings" id="game.menu_building_list" parent="game.menu_2" action="game.action_building_window"/>
+
+  </data>
+</odoo>
