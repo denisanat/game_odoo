@@ -16,6 +16,7 @@ class player( models.Model ):
     badges = fields.Many2many( comodel_name = 'game.badge', string = 'Insignias' )
     clan = fields.Many2one( "game.clan" )
     clanFriends = fields.One2many( 'game.player', related = 'clan.players', readonly = True, string = 'Compañeros de clan' )
+    clanColor = fields.Selection([('1', 'Azul'), ('2', 'Amarillo')], string='Color del Clan', related='clan.color', store=True, readonly=True)
 
 
 class building_type( models.Model ):
@@ -68,6 +69,7 @@ class clan( models.Model ):
     _description = 'Clans where anyone can join'
 
     name = fields.Char()
+    color = fields.Selection([('1', 'Azul'), ('2', 'Amarillo')], required = True)
     
     players = fields.One2many( comodel_name = 'game.player', inverse_name = 'clan' )
     

@@ -2,16 +2,7 @@
   <data>
     <!-- explicit list view definition -->
 
-    <record model="ir.ui.view" id="game.player_list">
-      <field name="name">players list</field>
-      <field name="model">game.player</field>
-      <field name="arch" type="xml">
-        <tree>
-          <field name="name"/>
-          <field name="th_level"/>
-        </tree>
-      </field>
-    </record>
+    
 
     <record model="ir.ui.view" id="game.building_list">
       <field name="name">buildings list</field>

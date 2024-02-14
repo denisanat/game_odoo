@@ -1,24 +1,38 @@
 <odoo>
     <data>
-<!--
-        <template id="listing">
-          <ul>
-            <li t-foreach="objects" t-as="object">
-              <a t-attf-href="#{ root }/objects/#{ object.id }">
-                <t t-esc="object.display_name"/>
-              </a>
-            </li>
-          </ul>
-        </template>
-        <template id="object">
-          <h1><t t-esc="object.display_name"/></h1>
-          <dl>
-            <t t-foreach="object._fields" t-as="field">
-              <dt><t t-esc="field"/></dt>
-              <dd><t t-esc="object[field]"/></dd>
-            </t>
-          </dl>
-        </template>
--->
+
+        <record model="ir.ui.view" id="game.clan_list">
+            <field name="name">clans list</field>
+            <field name="model">game.clan</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="players"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="game.badge_list">
+            <field name="name">badges list</field>
+            <field name="model">game.badge</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="text"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="game.building_list">
+            <field name="name">buildings list</field>
+            <field name="model">game.building</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="level"/>
+                </tree>
+            </field>
+        </record>
+
     </data>
 </odoo>

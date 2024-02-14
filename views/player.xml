@@ -1,0 +1,18 @@
+<odoo>
+  <data>
+
+        <record model="ir.ui.view" id="game.player_list">
+            <field name="name">players list</field>
+            <field name="model">game.player</field>
+            <field name="arch" type="xml">
+                <tree decoration-info="th_level &gt; 1">
+                    <field name="name"/>
+                    <field name="clan"/>
+                    <field name="th_level"/>
+                    <field name="clanColor" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+  </data>
+</odoo>
