@@ -1,0 +1,11 @@
+<odoo>
+    <data>
+        <record id="game.building_type_mine" model="game.building_type">
+            <field name="name">Mina</field>
+            <field name="gold_production">123,45</field>
+            <field name="elixir_production">0</field>
+            <field name="dark_elixir_production">0</field>
+            <field name="upgrade_cost">1000</field>
+        </record>
+    </data>
+</odoo>

@@ -26,7 +26,8 @@ class building_type( models.Model ):
     gold_production = fields.Float()
     elixir_production = fields.Float()
     dark_elixir_production = fields.Float()
-    gold_price = fields.Integer()
+    upgrade_cost = fields.Integer()
+
 
 class building( models.Model ):
     _name = 'game.building'
@@ -34,7 +35,7 @@ class building( models.Model ):
 
     name = fields.Char( compute = '_get_production' )
     type = fields.Many2one( 'game.building_type', required = True )
-    level = fields.Integer( default = 1, string = "Nivel", readonly = True )
+    level = fields.Integer( default = 1, string = "Nivel" )
     update_percent = fields.Float( default = 0 )
     gold_production = fields.Float( compute = '_get_production', string = "Oro por hora" )
     elixir_production = fields.Float( string = "Elixir por hora", compute = '_get_production' )
@@ -50,7 +51,7 @@ class building( models.Model ):
             b.gold_production = b.type.gold_production
             b.elixir_production = b.type.elixir_production
             b.dark_elixir_production = b.type.dark_elixir_production
-            b.upgrade_cost = b.type.gold_price
+            b.upgrade_cost = b.type.upgrade_cost
 
 
 class badge( models.Model ):

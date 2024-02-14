@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+
+        <record id="game.badge_novato" model="game.badge">
+            <field name="name">Novato</field>
+            <field name="text">Insignia para que todos sepan que eres nuevo</field>
+        </record>
+
+        <record id="game.badge_goat" model="game.badge">
+            <field name="name">G.O.A.T</field>
+            <field name="text">El mejor de todos los tiempos</field>
+        </record>
+    </data>
+</odoo>
