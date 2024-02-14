@@ -18,14 +18,39 @@ class player( models.Model ):
     clanFriends = fields.One2many( 'game.player', related = 'clan.players', readonly = True, string = 'Compañeros de clan' )
 
 
+class building_type( models.Model ):
+    _name = 'game.building_type'
+    _description = "The types of a building"
+
+    name = fields.Char()
+    gold_production = fields.Float()
+    elixir_production = fields.Float()
+    dark_elixir_production = fields.Float()
+    gold_price = fields.Integer()
+
 class building( models.Model ):
     _name = 'game.building'
     _description = "Buildings in the village"
 
-    name = fields.Char( required = True )
-    level = fields.Integer( default = "1", string = "Nivel", readonly = True )
+    name = fields.Char( compute = '_get_production' )
+    type = fields.Many2one( 'game.building_type', required = True )
+    level = fields.Integer( default = 1, string = "Nivel", readonly = True )
+    update_percent = fields.Float( default = 0 )
+    gold_production = fields.Float( compute = '_get_production', string = "Oro por hora" )
+    elixir_production = fields.Float( string = "Elixir por hora", compute = '_get_production' )
+    dark_elixir_production = fields.Float( string = "Elixir oscuro por hora", compute = '_get_production' )
+    upgrade_cost = fields.Integer( string = "Coste de mejora", compute = '_get_production' )
 
     player = fields.Many2one( "game.player", ondelete = "restrict" )
+
+    @api.depends( 'type', 'level' )
+    def _get_production( self ):
+        for b in self:
+            b.name = b.type.name
+            b.gold_production = b.type.gold_production
+            b.elixir_production = b.type.elixir_production
+            b.dark_elixir_production = b.type.dark_elixir_production
+            b.upgrade_cost = b.type.gold_price
 
 
 class badge( models.Model ):
