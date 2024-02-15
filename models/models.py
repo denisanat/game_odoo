@@ -18,6 +18,10 @@ class player( models.Model ):
     clanFriends = fields.One2many( 'game.player', related = 'clan.players', readonly = True, string = 'Compañeros de clan' )
     clanColor = fields.Selection([('1', 'Azul'), ('2', 'Amarillo')], string='Color del Clan', related='clan.color', store=True, readonly=True)
 
+    def upgrade_th(self):
+        for p in self:
+            p.th_level = p.th_level + 1
+
 
 class building_type( models.Model ):
     _name = 'game.building_type'

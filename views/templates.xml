@@ -1,6 +1,7 @@
 <odoo>
     <data>
 
+        <!-- CLAN -->
         <record model="ir.ui.view" id="game.clan_list">
             <field name="name">clans list</field>
             <field name="model">game.clan</field>
@@ -12,6 +13,23 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="game.clan_form">
+            <field name="name">clans form</field>
+            <field name="model">game.clan</field>
+            <field name="arch" type="xml">
+                <form>
+                  <sheet>
+                    <group>
+                      <field name="name"/>
+                      <field name="color"/>
+                      <field name="players"/>
+                    </group>
+                  </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- BADGE -->
         <record model="ir.ui.view" id="game.badge_list">
             <field name="name">badges list</field>
             <field name="model">game.badge</field>
@@ -23,6 +41,24 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="game.badge_form">
+            <field name="name">badges form</field>
+            <field name="model">game.badge</field>
+            <field name="arch" type="xml">
+                <form>
+                  <sheet>
+                    <group>
+                      <field name="name"/>
+                      <field name="text"/>
+                      <field name="players"/>
+                    </group>
+                  </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <!-- BUILDING -->
         <record model="ir.ui.view" id="game.building_list">
             <field name="name">buildings list</field>
             <field name="model">game.building</field>
@@ -30,7 +66,72 @@
                 <tree>
                     <field name="name"/>
                     <field name="level"/>
+                    <field name="update_percent" widget="progressbar" attrs="{'invisible':[('update_percent', '=', 0)]}"/>
                 </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="game.building_form">
+            <field name="name">buildings form</field>
+            <field name="model">game.building</field>
+            <field name="arch" type="xml">
+                <form>
+                  <sheet>
+                    <group>
+                      <group>
+                        <field name="name"/>
+                        <field name="level"/>
+                        <field name="update_percent" widget="progressbar" attrs="{'invisible':[('update_percent', '=', 0)]}"/>
+                      </group>
+                      <group>
+                        <field name="gold_production"/>
+                        <field name="elixir_production"/>
+                        <field name="dark_elixir_production"/>
+                      </group>
+                      <group>
+                        <field name="upgrade_cost"/>
+                      </group>
+                      <notebook>
+                        <page string = "Jugador">
+                          <field name="player"/>
+                        </page>
+                      </notebook>
+                    </group>
+                  </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <!-- BUILDING TYPE -->
+        <record model="ir.ui.view" id="game.building_type_list">
+            <field name="name">buildings type list</field>
+            <field name="model">game.building_type</field>
+            <field name="arch" type="xml">
+                <tree>
+                  <field name="name"/>
+                  <field name="gold_production"/>
+                  <field name="elixir_production"/>
+                  <field name="dark_elixir_production"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="game.building_type_form">
+            <field name="name">buildings type form</field>
+            <field name="model">game.building_type</field>
+            <field name="arch" type="xml">
+                <form>
+                  <sheet>
+                    <group>
+                      <field name="name"/>
+                      <field name="gold_production"/>
+                      <field name="elixir_production"/>
+                      <field name="dark_elixir_production"/>
+                      <field name="upgrade_cost"/>
+                    </group>
+                  </sheet>
+                </form>
             </field>
         </record>
 
