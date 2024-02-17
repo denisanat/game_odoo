@@ -4,3 +4,4 @@ access_game_building,game.building,model_game_building,base.group_user,1,1,1,1
 access_game_badge,game.badge,model_game_badge,base.group_user,1,1,1,1
 access_game_clan,game.clan,model_game_clan,base.group_user,1,1,1,1
 access_game_building_type,game.building_type,model_game_building_type,base.group_user,1,1,1,1
+access_game_battle,game.battle,model_game_battle,base.group_user,1,1,1,1

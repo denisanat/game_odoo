@@ -49,6 +49,12 @@
       <field name="view_mode">tree,form</field>
     </record>
 
+    <record model="ir.actions.act_window" id="game.action_battle_window">
+      <field name="name">Battles</field>
+      <field name="res_model">game.battle</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
 
     <!-- server action to the one above -->
 <!--
@@ -79,6 +85,7 @@
     <menuitem name="Buildings" id="game.menu_building_list" parent="game.menu_2" action="game.action_building_window"/>
     <menuitem name="Badges" id="game.menu_badge_list" parent="game.menu_2" action="game.action_badge_window"/>
     <menuitem name="Building types" id="game.menu_building_type_list" parent="game.menu_2" action="game.action_building_type_window"/>
+    <menuitem name="Battles" id="game.menu_battle_list" parent="game.menu_1" action="game.action_battle_window"/>
 
   </data>
 </odoo>

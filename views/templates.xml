@@ -67,6 +67,7 @@
                     <field name="name"/>
                     <field name="level"/>
                     <field name="update_percent" widget="progressbar" attrs="{'invisible':[('update_percent', '=', 0)]}"/>
+                    <field name="player"/>
                 </tree>
             </field>
         </record>
@@ -79,11 +80,12 @@
                   <sheet>
                     <group>
                       <group>
-                        <field name="name"/>
+                        <field name="type"/>
                         <field name="level"/>
                         <field name="update_percent" widget="progressbar" attrs="{'invisible':[('update_percent', '=', 0)]}"/>
                       </group>
                       <group>
+                        <separator string="Estadisticas"/>
                         <field name="gold_production"/>
                         <field name="elixir_production"/>
                         <field name="dark_elixir_production"/>
@@ -129,6 +131,47 @@
                       <field name="elixir_production"/>
                       <field name="dark_elixir_production"/>
                       <field name="upgrade_cost"/>
+                    </group>
+                  </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <!-- BATTLE -->
+        <record model="ir.ui.view" id="game.battle_list">
+            <field name="name">battle list</field>
+            <field name="model">game.battle</field>
+            <field name="arch" type="xml">
+                <tree>
+                  <field name="name"/>
+                  <field name="player1"/>
+                  <field name="player2"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="game.battle_form">
+            <field name="name">battle form</field>
+            <field name="model">game.battle</field>
+            <field name="arch" type="xml">
+                <form>
+                  <sheet>
+                    <group>
+                      <group>
+                      <separator string="General Info"/>
+                        <field name="name"/>
+                        <field name="player1"/>
+                        <field name="player2"/>
+                      </group>
+                      <group>
+                        <separator string="Time"/>
+                        <field name="start"/>
+                        <field name="end"/>
+                        <field name="total_time"/>
+                        <field name="remaining_time"/>
+                        <field name="progress"/>
+                      </group>
                     </group>
                   </sheet>
                 </form>

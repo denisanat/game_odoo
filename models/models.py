@@ -1,4 +1,8 @@
 from odoo import models, fields, api
+import math
+from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
+from odoo.exceptions import ValidationError
 
 
 class player( models.Model ):
@@ -21,6 +25,12 @@ class player( models.Model ):
     def upgrade_th(self):
         for p in self:
             p.th_level = p.th_level + 1
+
+    @api.constrains('buildings')
+    def _max_level_building(self):
+        for record in self:
+            if record.buildings.level > record.th_level:
+                raise ValidationError("El nivel de tus edificios no puede sobrepasar el del ayuntamiento")
 
 
 class building_type( models.Model ):
@@ -47,7 +57,7 @@ class building( models.Model ):
     dark_elixir_production = fields.Float( string = "Elixir oscuro por hora", compute = '_get_production' )
     upgrade_cost = fields.Integer( string = "Coste de mejora", compute = '_get_production' )
 
-    player = fields.Many2one( "game.player", ondelete = "restrict" )
+    player = fields.Many2one( "game.player", ondelete = "cascade" )
 
     @api.depends( 'type', 'level' )
     def _get_production( self ):
@@ -73,11 +83,38 @@ class clan( models.Model ):
     _description = 'Clans where anyone can join'
 
     name = fields.Char()
-    color = fields.Selection([('1', 'Azul'), ('2', 'Amarillo')], required = True)
+    color = fields.Selection([('1', 'Azul'), ('2', 'Amarillo')], required = True )
     
     players = fields.One2many( comodel_name = 'game.player', inverse_name = 'clan' )
     
 
+class battle( models.Model ):
+    _name = 'game.battle'
+    _description = 'Battles between two players'
+
+    name = fields.Char()
+    player1 = fields.Many2one( 'game.player', domain="[('id','!=',player2)]", required = True )
+    player2 = fields.Many2one( 'game.player', domain="[('id','!=',player1)]", required = True )
+    start = fields.Datetime( default = lambda self: fields.Datetime.now() )
+    end = fields.Datetime( compute = '_set_end_date' )
+    total_time = fields.Integer( compute = '_set_end_date' )
+    remaining_time = fields.Char( compute = '_set_end_date' )
+    progress = fields.Float(compute='_set_end_date')
+
+    @api.depends('start')
+    def _set_end_date(self):
+        for b in self:
+            date_start = fields.Datetime.from_string(b.start)
+            date_end = date_start + timedelta(hours=2)
+            b.end = fields.Datetime.to_string(date_end)
+            b.total_time = (date_end - date_start).total_seconds() / 60
+            remaining = relativedelta(date_end, datetime.now())
+            b.remaining_time = str(remaining.hours) + ":" + str(remaining.minutes) + ":" + str(remaining.seconds)
+            passed_time = (datetime.now() - date_start).total_seconds()
+            b.progress = (passed_time * 100) / (b.total_time * 60)
+            if b.progress > 100:
+                b.progress = 100
+                b.remaining_time = '00:00:00'
 
 
 
