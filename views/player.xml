@@ -59,5 +59,32 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="game.player_kanban">
+            <field name="name">game.player kanban</field>
+            <field name="model">game.player</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="clan">
+                    <template>
+                        <t t-name="kanban-box">
+                            <div t-attf-class=" oe_kanban_color_{{kanban_getcolor(record.th_level.raw_value)}}
+                            oe_kanban_global_click">
+                                <div t-attf-class="oe_kanban_content">
+                                    <h4>
+                                        <a type="edit">
+                                            <field name="name"/>
+                                        </a>
+                                    </h4>
+                                    <ul>
+                                        <li>Nivel de ayuntamiento: <field name="th_level"/></li>
+                                        <li>Clan: <field name="clan"/></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </template>
+                </kanban>
+            </field>
+        </record>
+
   </data>
 </odoo>
