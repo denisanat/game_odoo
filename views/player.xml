@@ -86,5 +86,17 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="game.player_search_view">
+            <field name="name">players list</field>
+            <field name="model">game.player</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name" string="Nombre y Ayuntamiento" filter_domain="['|', ('name', 'ilike', self), ('th_level', 'ilike', self)]"/>
+                    <filter name="group_by_th_level" string="Nivel" context="{'group_by': 'th_level'}"/>
+                    <filter name="high_level" string="Alto Nivel" domain="[('th_level', '>=', '3')]"/>
+                </search>
+            </field>
+        </record>
+
   </data>
 </odoo>
