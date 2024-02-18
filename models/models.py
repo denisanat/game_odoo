@@ -12,9 +12,11 @@ class player( models.Model ):
     name = fields.Char( required = True )
     th_level = fields.Integer( string = "Nivel de Ayuntamiento", default = "1", help = "El nivel del ayuntamiento indica hasta que nivel puedes mejorar el resto de estructuras" )
 
-    gold = fields.Integer( string = "Oro", default = 10000, readonly = True )
-    elixir = fields.Integer( string = "Elixir", default = 10000, readonly = True )
-    dark_elixir = fields.Integer( string = "Elixir oscuro", default = 0, readonly = True )
+    gold = fields.Float( string = "Oro", default = 10000, readonly = True )
+    elixir = fields.Float( string = "Elixir", default = 10000, readonly = True )
+    dark_elixir = fields.Float( string = "Elixir oscuro", default = 0, readonly = True )
+
+    gold_production = fields.Float( string = "Oro por hora", compute = "_get_total_production" )
 
     buildings = fields.One2many( comodel_name = 'game.building', inverse_name = 'player', string = "Edificios" )
     troops = fields.One2many( comodel_name = 'game.troop', inverse_name = 'player', string = "Ejercito" )
@@ -29,9 +31,14 @@ class player( models.Model ):
 
     @api.constrains('buildings')
     def _max_level_building(self):
-        for record in self:
-            if record.buildings.level > record.th_level:
-                raise ValidationError("El nivel de tus edificios no puede sobrepasar el del ayuntamiento")
+        for p in self:
+            for b in p.buildings:
+                if b.level > p.th_level:
+                    raise ValidationError("El nivel de tus edificios no puede sobrepasar el del ayuntamiento")
+            
+    def _get_total_production( self ):
+        for p in self:
+            p.gold_production = sum( p.buildings.mapped('gold_production'))
 
 
 class building_type( models.Model ):
@@ -64,10 +71,10 @@ class building( models.Model ):
     def _get_production( self ):
         for b in self:
             b.name = b.type.name
-            b.gold_production = b.type.gold_production
-            b.elixir_production = b.type.elixir_production
-            b.dark_elixir_production = b.type.dark_elixir_production
-            b.upgrade_cost = b.type.upgrade_cost
+            b.gold_production = b.type.gold_production * b.level
+            b.elixir_production = b.type.elixir_production * b.level
+            b.dark_elixir_production = b.type.dark_elixir_production * b.level
+            b.upgrade_cost = b.type.upgrade_cost * b.level
 
 
 class badge( models.Model ):
@@ -85,8 +92,16 @@ class clan( models.Model ):
 
     name = fields.Char()
     color = fields.Selection([('1', 'Azul'), ('2', 'Amarillo')], required = True )
+    categoria = fields.Char( compute = '_get_categoria' )
     
     players = fields.One2many( comodel_name = 'game.player', inverse_name = 'clan' )
+
+    def _get_categoria( self ):
+        for c in self:
+            if len( c.players.filtered( lambda p: p.th_level > 3 )) > 3:
+                c.categoria = "Clan de nivel alto"
+            else:
+                c.categoria = "Clan de nivel bajo"
     
 
 class battle( models.Model ):
@@ -117,6 +132,7 @@ class battle( models.Model ):
                 b.progress = 100
                 b.remaining_time = '00:00:00'
 
+
     class troop( models.Model ):
         _name = 'game.troop'
         _description = 'The troops that every player has'
@@ -136,6 +152,7 @@ class battle( models.Model ):
                 t.health = t.unit.health
                 t.damage = t.unit.health
                 t.cost = t.unit.cost
+
 
     class unit( models.Model ):
         _name = 'game.unit'

@@ -23,6 +23,7 @@
                       <field name="name"/>
                       <field name="color"/>
                       <field name="players"/>
+                      <field name="categoria"/>
                     </group>
                   </sheet>
                 </form>

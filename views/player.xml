@@ -33,6 +33,10 @@
                                 <field name="elixir"/>
                                 <field name="dark_elixir" attrs="{'invisible':[('th_level', '&lt;', 3)]}"/>
                             </group>
+                            <group>
+                                <separator string="Producción"/>
+                                <field name="gold_production"/>
+                            </group>
                             <notebook>
                                 <page string="Edificios">
                                     <field name="buildings"/>
