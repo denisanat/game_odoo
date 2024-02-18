@@ -190,5 +190,78 @@
             </field>
         </record>
 
+
+        <!-- TROOP -->
+        <record model="ir.ui.view" id="game.troop_list">
+            <field name="name">troop list</field>
+            <field name="model">game.troop</field>
+            <field name="arch" type="xml">
+                <tree>
+                  <field name="name"/>
+                  <field name="player"/>
+                  <field name="quantity"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="game.troop_form">
+            <field name="name">troop form</field>
+            <field name="model">game.troop</field>
+            <field name="arch" type="xml">
+                <form>
+                  <sheet>
+                    <group>
+                      <group>
+                        <field name="unit"/>
+                        <separator string="Unit info"/>
+                        <field name="health"/>
+                        <field name="damage"/>
+                        <field name="cost"/>
+                      </group>
+                      <group>
+                        <separator string="Player info"/>
+                        <field name="player"/>
+                        <field name="quantity"/>
+                      </group>
+                    </group>
+                  </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <!-- UNIT -->
+        <record model="ir.ui.view" id="game.unit_list">
+            <field name="name">unit list</field>
+            <field name="model">game.unit</field>
+            <field name="arch" type="xml">
+                <tree>
+                  <field name="name"/>
+                  <field name="health"/>
+                  <field name="damage"/>
+                  <field name="cost"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="game.unit_form">
+            <field name="name">unit form</field>
+            <field name="model">game.unit</field>
+            <field name="arch" type="xml">
+                <form>
+                  <sheet>
+                    <group>
+                      <group>
+                        <field name="name"/>
+                        <field name="health"/>
+                        <field name="damage"/>
+                        <field name="cost"/>
+                      </group>
+                    </group>
+                  </sheet>
+                </form>
+            </field>
+        </record>
+
     </data>
 </odoo>

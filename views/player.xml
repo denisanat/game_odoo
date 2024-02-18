@@ -52,6 +52,16 @@
                                         </tree>
                                     </field>
                                 </page>
+                                <page string="Ejercito">
+                                    <field name="troops">
+                                        <tree>
+                                            <field name="name"/>
+                                            <field name="health"/>
+                                            <field name="damage"/>
+                                            <field name="quantity"/>
+                                        </tree>
+                                    </field>
+                                </page>
                             </notebook>
                         </group>
                     </sheet>

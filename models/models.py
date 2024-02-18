@@ -17,6 +17,7 @@ class player( models.Model ):
     dark_elixir = fields.Integer( string = "Elixir oscuro", default = 0, readonly = True )
 
     buildings = fields.One2many( comodel_name = 'game.building', inverse_name = 'player', string = "Edificios" )
+    troops = fields.One2many( comodel_name = 'game.troop', inverse_name = 'player', string = "Ejercito" )
     badges = fields.Many2many( comodel_name = 'game.badge', string = 'Insignias' )
     clan = fields.Many2one( "game.clan" )
     clanFriends = fields.One2many( 'game.player', related = 'clan.players', readonly = True, string = 'Compañeros de clan' )
@@ -115,6 +116,36 @@ class battle( models.Model ):
             if b.progress > 100:
                 b.progress = 100
                 b.remaining_time = '00:00:00'
+
+    class troop( models.Model ):
+        _name = 'game.troop'
+        _description = 'The troops that every player has'
+
+        name = fields.Char( compute = '_get_unit', string = "Nombre" )
+        unit = fields.Many2one( 'game.unit', required = True )
+        health = fields.Float( compute = '_get_unit', string = "Vida" )
+        damage = fields.Float( compute = '_get_unit', string = "Daño" )
+        quantity = fields.Integer( required = True, default = 1, string = "Cantidad" )
+        player = fields.Many2one( 'game.player', ondelete = "cascade" )
+        cost = fields.Float( compute = '_get_unit', string = "Coste" )
+
+        @api.depends( 'unit' )
+        def _get_unit( self ):
+            for t in self:
+                t.name = t.unit.name
+                t.health = t.unit.health
+                t.damage = t.unit.health
+                t.cost = t.unit.cost
+
+    class unit( models.Model ):
+        _name = 'game.unit'
+        _description = 'Each unit'
+
+        name = fields.Char()
+        health = fields.Float()
+        damage = fields.Float()
+        cost = fields.Float()
+
 
 
 
