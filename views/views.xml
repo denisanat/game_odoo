@@ -52,7 +52,7 @@
     <record model="ir.actions.act_window" id="game.action_battle_window">
       <field name="name">Battles</field>
       <field name="res_model">game.battle</field>
-      <field name="view_mode">tree,form</field>
+      <field name="view_mode">tree,form,calendar</field>
     </record>
 
 

@@ -178,5 +178,17 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="game.battle_calendar_view">
+            <field name="name">game battle calendar</field>
+            <field name="model">game.battle</field>
+            <field name="arch" type="xml">
+                <calendar string="Battles" date_start="start" date_stop="end" color="player1">
+                    <field name="name"/>
+                    <field name="player1"/>
+                    <field name="player2"/>
+                </calendar>
+            </field>
+        </record>
+
     </data>
 </odoo>
