@@ -20,9 +20,16 @@
 
     <record model="ir.actions.act_window" id="game.action_player_window">
       <field name="name">Players</field>
-      <field name="res_model">game.player</field>
+      <field name="res_model">res.partner</field>
       <field name="context">{'search_default_group_by_th_level': 1}</field>
       <field name="view_mode">tree,form,kanban</field>
+      <field name="domain"></field>
+      <field name="context">{'default_is_player': True, 'search_default_is_player_filter': 1}</field>
+      <field name="search_view_id" ref="game.player_search_view"/>
+
+      <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('game.player_list')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('game.player_form')}),]" />
     </record>
 
     <record model="ir.actions.act_window" id="game.action_building_window">

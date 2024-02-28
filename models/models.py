@@ -6,11 +6,13 @@ from odoo.exceptions import ValidationError
 
 
 class player( models.Model ):
-    _name = 'game.player'
+    _name = 'res.partner'
+    _inherit = 'res.partner'
     _description = 'The players of the game'
 
-    name = fields.Char( required = True )
+    #name = fields.Char( required = True )
     th_level = fields.Integer( string = "Nivel de Ayuntamiento", default = "1", help = "El nivel del ayuntamiento indica hasta que nivel puedes mejorar el resto de estructuras" )
+    is_player = fields.Boolean( default = False )
 
     gold = fields.Float( string = "Oro", default = 10000, readonly = True )
     elixir = fields.Float( string = "Elixir", default = 10000, readonly = True )
@@ -22,7 +24,7 @@ class player( models.Model ):
     troops = fields.One2many( comodel_name = 'game.troop', inverse_name = 'player', string = "Ejercito" )
     badges = fields.Many2many( comodel_name = 'game.badge', string = 'Insignias' )
     clan = fields.Many2one( "game.clan" )
-    clanFriends = fields.One2many( 'game.player', related = 'clan.players', readonly = True, string = 'Compañeros de clan' )
+    clanFriends = fields.One2many( 'res.partner', related = 'clan.players', readonly = True, string = 'Compañeros de clan' )
     clanColor = fields.Selection([('1', 'Azul'), ('2', 'Amarillo')], string='Color del Clan', related='clan.color', store=True, readonly=True)
 
     def upgrade_th(self):
@@ -65,7 +67,7 @@ class building( models.Model ):
     dark_elixir_production = fields.Float( string = "Elixir oscuro por hora", compute = '_get_production' )
     upgrade_cost = fields.Integer( string = "Coste de mejora", compute = '_get_production' )
 
-    player = fields.Many2one( "game.player", ondelete = "cascade" )
+    player = fields.Many2one( "res.partner", ondelete = "cascade" )
 
     @api.depends( 'type', 'level' )
     def _get_production( self ):
@@ -84,7 +86,7 @@ class badge( models.Model ):
     name = fields.Char()
     text = fields.Text()
 
-    players = fields.Many2many( comodel_name='game.player' )
+    players = fields.Many2many( comodel_name='res.partner' )
 
 class clan( models.Model ):
     _name = 'game.clan'
@@ -94,7 +96,7 @@ class clan( models.Model ):
     color = fields.Selection([('1', 'Azul'), ('2', 'Amarillo')], required = True )
     categoria = fields.Char( compute = '_get_categoria' )
     
-    players = fields.One2many( comodel_name = 'game.player', inverse_name = 'clan' )
+    players = fields.One2many( comodel_name = 'res.partner', inverse_name = 'clan' )
 
     def _get_categoria( self ):
         for c in self:
@@ -109,8 +111,8 @@ class battle( models.Model ):
     _description = 'Battles between two players'
 
     name = fields.Char()
-    player1 = fields.Many2one( 'game.player', domain="[('id','!=',player2)]", required = True )
-    player2 = fields.Many2one( 'game.player', domain="[('id','!=',player1)]", required = True )
+    player1 = fields.Many2one( 'res.partner', domain="[('id','!=',player2)]", required = True )
+    player2 = fields.Many2one( 'res.partner', domain="[('id','!=',player1)]", required = True )
     start = fields.Datetime( default = lambda self: fields.Datetime.now() )
     end = fields.Datetime( compute = '_set_end_date' )
     total_time = fields.Integer( compute = '_set_end_date' )
@@ -142,7 +144,7 @@ class battle( models.Model ):
         health = fields.Float( compute = '_get_unit', string = "Vida" )
         damage = fields.Float( compute = '_get_unit', string = "Daño" )
         quantity = fields.Integer( required = True, default = 1, string = "Cantidad" )
-        player = fields.Many2one( 'game.player', ondelete = "cascade" )
+        player = fields.Many2one( 'res.partner', ondelete = "cascade" )
         cost = fields.Float( compute = '_get_unit', string = "Coste" )
 
         @api.depends( 'unit' )
