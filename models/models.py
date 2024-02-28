@@ -165,6 +165,39 @@ class battle( models.Model ):
         damage = fields.Float()
         cost = fields.Float()
 
+    class battle_wizard( models.TransientModel ):
+        _name = 'game.battle_wizard'
+
+        def _get_default_city(self):
+            return self._context.get('player_context')
+        
+        name = fields.Char()
+        player1 = fields.Many2one( 'res.partner', domain="[('id','!=',player2)]", required = True )
+        player2 = fields.Many2one( 'res.partner', domain="[('id','!=',player1)]", required = True )
+
+        def create_battle(self):
+            self.env['game.battle'].create({
+                "name": self.name,
+                "player1": self.player1.id,
+                "player2": self.player2.id
+            })
+            
+
+    class building_wizard( models.TransientModel ):
+        _name = 'game.building_wizard'
+
+        def _get_default_city(self):
+            return self._context.get('player_context')
+        
+        player = fields.Many2one( "res.partner", ondelete = "cascade" )
+        type = fields.Many2one( 'game.building_type', required = True )
+
+        def create_building(self):
+            self.env['game.building'].create({
+                "player": self.player.id,
+                "type": self.type.id
+            })
+
 
 
 

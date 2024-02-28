@@ -264,5 +264,67 @@
             </field>
         </record>
 
+
+
+        <record model="ir.ui.view" id="game.battle_wizard_view">
+            <field name="name">Game battle wizard</field>
+            <field name="model">game.battle_wizard</field>
+            <field name="arch" type="xml">
+                <form > <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="player1"/>
+                        <field name="player2"/>
+                        <footer>
+                            <button name="create_battle" type="object"
+                                    string="Create Battle" class="oe_highlight"/>
+                            or
+                            <button special="cancel" string="Cancel"/>
+                        </footer>
+                    </group>
+                </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="game.launch_battle_wizard" model="ir.actions.act_window">
+            <field name="name">Launch battle</field>
+            <field name="res_model">game.battle_wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="model_game_battle"/>
+        </record>
+
+
+
+
+        <record model="ir.ui.view" id="game.building_wizard_view">
+            <field name="name">Game building wizard</field>
+            <field name="model">game.building_wizard</field>
+            <field name="arch" type="xml">
+                <form > <sheet>
+                    <group>
+                        <field name="player"/>
+                        <field name="type"/>
+                        <footer>
+                            <button name="create_building" type="object"
+                                    string="Construir" class="oe_highlight"/>
+                            or
+                            <button special="cancel" string="Cancel"/>
+                        </footer>
+                    </group>
+                </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="game.launch_building_wizard" model="ir.actions.act_window">
+            <field name="name">Launch building</field>
+            <field name="res_model">game.building_wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="model_game_building"/>
+        </record>
+
     </data>
 </odoo>

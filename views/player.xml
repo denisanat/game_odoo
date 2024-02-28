@@ -40,6 +40,10 @@
                             </group>
                             <notebook>
                                 <page string="Edificios">
+                                    <button name="%(game.launch_building_wizard)d"
+                                        type="action" string="Construir" class="oe_highlight"
+                                        context="{'player_context': active_id}"/>
+
                                     <field name="buildings"/>
                                 </page>
                                 <page string="Insignias">
@@ -66,6 +70,11 @@
                                             <field name="quantity"/>
                                         </tree>
                                     </field>
+                                </page>
+                                <page string="Batallas">
+                                    <button name="%(game.launch_battle_wizard)d"
+                                        type="action" string="Atacar" class="oe_highlight"
+                                        context="{'player_context': active_id}"/>
                                 </page>
                             </notebook>
                         </group>

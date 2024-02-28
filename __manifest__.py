@@ -29,7 +29,7 @@
         'views/views.xml',
         'views/templates.xml',
         'demo/badges.xml',
-    #    'demo/building_types.xml',
+        'demo/building_types.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
